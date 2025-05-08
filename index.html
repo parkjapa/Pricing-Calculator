@@ -1,41 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JAPA Pricing Calculator</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    :root { --primary: #cd5e14; --text: #333; --text-light: #666; --bg-alt: #fafafb; --border: #e0e0e0; }
-    .japa { color: var(--primary); }
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg-alt); color: var(--text); margin: 0; padding: 40px 20px; }
-    .title-section { text-align: center; margin-bottom: 24px; }
-    .title-section h1 { font-family: 'Roboto', sans-serif; font-size: 2.5rem; margin: 0 0 8px; }
-    .title-section p { font-size: 1rem; color: var(--text-light); margin: 0; }
-    .container { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .panel { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .panel h2 { font-family: 'Roboto', sans-serif; font-size: 1.5rem; color: var(--primary); margin: 0 0 16px; }
-    .form label { display: block; margin: 16px 0 4px; font-size: 0.95rem; }
-    .form input, .form select { width: 100%; padding: 8px; font-size: 1rem; border: 1px solid var(--border); border-radius: 4px; }
-    .btn { margin-top: 24px; width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
-    .btn:hover { background: #b24b10; }
-    .output p.detail { font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px; }
-    .section-title { font-weight: 600; margin: 20px 0 8px; display: none; }
-    .section-title.visible { display: block; }
-    ul { list-style: none; padding: 0; margin: 0 0 16px; display: none; }
-    ul.visible { display: block; }
-    ul li { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.95rem; }
-    .install-note { font-size: 0.85rem; color: var(--text-light); text-align: right; margin-top: -8px; margin-bottom: 8px; }
-    .divider { height: 1px; background: var(--border); margin: 20px 0; }
-    .notes { max-width: 960px; margin: 24px auto; padding: 24px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; font-size: 0.95rem; color: var(--text); }
-    .cta { text-align: center; margin: 24px 0; }
-    .cta p { margin: 8px 0; }
-    .cta-btn { display: inline-block; font-weight: 600; color: var(--primary); border: 2px solid var(--primary); border-radius: 4px; padding: 10px 20px; text-decoration: none; transition: background 0.2s, color 0.2s; }
-    .cta-btn:hover { background: var(--primary); color: #fff; }
-    footer { text-align: center; margin: 24px 0 0; font-size: 0.85rem; color: var(--text-light); }
-    @media (max-width:700px) { .container { grid-template-columns: 1fr; } }
+    :root {
+      --primary: #cd5e14;
+      --text: #333;
+      --text-light: #666;
+      --bg-gradient-start: #f2f3f5;
+      --bg-gradient-end: #e0e2e6;
+      --border: #e0e0e0;
+    }
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: linear-gradient(
+        135deg,
+        var(--bg-gradient-start),
+        var(--bg-gradient-end)
+      );
+      color: var(--text);
+    }
+    .japa {
+      color: var(--primary);
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    .title-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .title-section h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 2.5rem;
+      margin: 0 0 8px;
+    }
+    .title-section p {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin: 0;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .panel {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    .panel h2 {
+      font-family: 'Roboto', sans-serif;
+      color: var(--primary);
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+    label {
+      display: block;
+      margin: 16px 0 4px;
+      font-size: 0.95rem;
+    }
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+    }
+    .btn {
+      margin-top: 24px;
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #b24b10;
+    }
+    .section-title {
+      font-weight: 600;
+      margin: 20px 0 8px;
+      display: none;
+    }
+    .section-title.visible {
+      display: block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: none;
+    }
+    ul.visible {
+      display: block;
+    }
+    ul li {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+    .install-note {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-align: right;
+      margin: -8px 0 8px;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+    .notes {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text);
+      backdrop-filter: blur(8px);
+    }
+    .roi-marketing {
+      text-align: center;
+      margin: 24px 0;
+    }
+    .roi-marketing a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    .closing {
+      text-align: center;
+      margin: 16px 0;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    footer {
+      text-align: center;
+      margin: 24px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .discount-note {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-left: 16px;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @media (max-width: 700px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -47,36 +199,53 @@
     <div class="panel form">
       <h2>Project Inputs</h2>
       <label for="spaces">Number of Spaces</label>
-      <input id="spaces" type="number" min="0" value="0">
+      <input id="spaces" type="number" min="0" value="0" />
       <label for="lanes">Number of Lanes</label>
-      <input id="lanes" type="number" min="0" value="0">
+      <input id="lanes" type="number" min="0" value="0" />
       <label for="term">Term (years)</label>
-      <input id="term" type="number" min="1" value="3">
+      <input id="term" type="number" min="1" value="3" />
       <label for="hardwareOption">Model</label>
       <select id="hardwareOption">
         <option value="purchase">Purchase</option>
-        <option value="lease">Lease (min. 3 yrs)</option>
+        <option value="lease">Lease</option>
       </select>
       <button class="btn" id="compute">Calculate Pricing</button>
+      <p style="font-size:0.9rem;color:var(--text-light);margin-top:16px;">
+        Enter project details to see enterprise pricing.
+      </p>
     </div>
     <div class="panel output">
       <h2>Pricing Results</h2>
-      <p class="detail" id="summaryDetail">Please enter values above.</p>
-      <div class="section-title" id="year1Title">Year 1 Breakdown</div>
+      <p id="summaryDetail">Please enter values above.</p>
+      <div id="year1Title" class="section-title">Year 1 Breakdown</div>
       <ul id="year1List"></ul>
       <p class="install-note">Installation is optional.</p>
-      <div class="divider"></div>
-      <div class="section-title" id="year2Title">Annual (Years 2+)</div>
+      <div id="year2Title" class="section-title">Annual (Years 2+)</div>
       <ul id="year2List"></ul>
       <div class="divider"></div>
-      <div class="section-title" id="tcoTitle">Total Cost over <span id="termLabel">3</span>-Year Term</div>
+      <div id="tcoTitle" class="section-title">3-Year Total</div>
       <ul id="tcoList"></ul>
     </div>
   </div>
   <div class="notes">
-    <p><strong>Bulk Discounts:</strong> 5% off per 500 sensors, 5% off per 10 counters (max 20%).</p>
-    <p><strong>Commitment Discounts:</strong> 5% off for 3–4 year terms, 10% off for 5+ year terms.</p>
+    <p><strong>Bulk Discounts:</strong> 5% off per 500 sensors, max 20%.</p>
+    <p><strong>Commitment Discounts:</strong> 5% for 3–4 yrs, 10% for 5+ yrs.</p>
   </div>
+  <div class="roi-marketing">
+    <p>
+      Looking for ROI insights? Try our
+      <a href="https://parkjapa.github.io/ROI-Calculator/" target="_blank">
+        ROI Calculator
+      </a>.
+    </p>
+  </div>
+  <p class="closing">
+    Thanks for exploring <span class="japa">JAPA</span> Pricing Calculator—where smarter
+    parking meets seamless efficiency.
+  </p>
+  <footer>
+    Contact us: contact@jaja.one | 877-PRK-JAPA | www.parkjaja.com
+  </footer>
   <script>
     const spacesEl = document.getElementById('spaces');
     const lanesEl = document.getElementById('lanes');
@@ -85,75 +254,188 @@
     const computeBtn = document.getElementById('compute');
 
     const SENSOR_COST = 150;
-    const SENSOR_SAAS = 72;
-    const LEASE_MONTHLY = 10;
+    const SENSOR_SERVICE = 72;
+    const SENSOR_LEASE_MONTHLY = 10;
     const COUNTER_COST = 400;
-    const COUNTER_SAAS_PURCHASE = 2400;
-    const COUNTER_SAAS_LEASE = 3000;
+    const COUNTER_SERVICE = 2400;
+    const COUNTER_LEASE = 3000;
     const INSTALL_FEE = 40;
-    const BASE_STATION = 4800;
+    const BASE_STATION_COST = 4800;
 
-    function formatCurrency(v) { return '$' + v.toLocaleString(); }
+    function formatUSD(val) {
+      return '$' + val.toLocaleString();
+    }
+
+    function animateNumber(el, end) {
+      let start = 0,
+        dur = 800,
+        st;
+      function step(ts) {
+        if (!st) st = ts;
+        const p = Math.min((ts - st) / dur, 1);
+        el.textContent = formatUSD(Math.floor(start + (end - start) * p));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      el.classList.add('fade-in');
+      requestAnimationFrame(step);
+    }
 
     function calculate() {
-      const spaces = +spacesEl.value;
-      const lanes = +lanesEl.value;
+      let spaces = +spacesEl.value;
+      let lanes = +lanesEl.value;
       let term = +termEl.value;
-      const model = modelEl.value;
-      if (model === 'lease' && term < 3) term = 3;
+      const mode = modelEl.value;
+      if (mode === 'lease' && term < 3) term = 3;
       termEl.value = term;
-      document.getElementById('termLabel').textContent = term;
+      document.getElementById('tcoTitle').textContent = `${term}-Year Total`;
 
-      document.getElementById('summaryDetail').textContent = `Spaces:${spaces}, Lanes:${lanes}, Term:${term} yrs, Model:${model}`;
-      ['year1Title','year2Title','tcoTitle'].forEach(id => document.getElementById(id).classList.add('visible'));
-      ['year1List','year2List','tcoList'].forEach(id => document.getElementById(id).classList.add('visible'));
+      ['year1Title','year2Title','tcoTitle'].forEach((id) =>
+        document.getElementById(id).classList.add('visible')
+      );
+      ['year1List','year2List','tcoList'].forEach((id) =>
+        document.getElementById(id).classList.add('visible')
+      );
 
-      const spaceBulk = Math.min(0.05 * Math.floor(spaces / 500), 0.2);
-      const laneBulk = Math.min(0.05 * Math.floor(lanes / 10), 0.2);
-      const commitDisc = term >= 5 ? 0.1 : (term >= 3 ? 0.05 : 0);
+      document.getElementById('summaryDetail').textContent =
+        `Spaces: ${spaces}, Lanes: ${lanes}, Term: ${term} yrs, Mode: ${mode}`;
 
-      const sensorPu = spaces * SENSOR_COST * (1 - spaceBulk);
-      const sensorLe = spaces * LEASE_MONTHLY * 12 * (1 - spaceBulk);
-      const sensorSs = spaces * SENSOR_SAAS;
-      const counterPu = lanes * COUNTER_COST * (1 - laneBulk);
-      const counterLe = lanes * COUNTER_SAAS_LEASE * (1 - laneBulk);
-      const counterSs = lanes * COUNTER_SAAS_PURCHASE;
+      const spaceDisc = Math.min(0.05 * Math.floor(spaces / 500), 0.2);
+      const laneDisc = Math.min(0.05 * Math.floor(lanes / 10), 0.2);
+      const commitDisc = term >= 5 ? 0.1 : term >= 3 ? 0.05 : 0;
+
       const stationCount = spaces ? Math.ceil(spaces / 500) : 0;
-      const stationCost = stationCount * BASE_STATION;
-      const installCost = (spaces + lanes) * INSTALL_FEE;
+      const stationCost = stationCount * BASE_STATION_COST;
+      const installCost =
+        (spaces + lanes) * (mode === 'purchase' ? INSTALL_FEE : 0);
 
-      const year1Pu = sensorPu + sensorSs + counterPu + counterSs + stationCost + installCost;
-      const year1Le = sensorLe + counterLe + installCost;
-      const annualPu = sensorSs + counterSs;
-      const annualLe = spaces * LEASE_MONTHLY * 12 + lanes * COUNTER_SAAS_LEASE;
-      const discAnnualPu = annualPu * (1 - commitDisc);
-      const discAnnualLe = annualLe * (1 - commitDisc);
-      const tcoPu = year1Pu + (term - 1) * discAnnualPu;
-      const tcoLe = year1Le + (term - 1) * discAnnualLe;
+      const sensorAct = spaces * SENSOR_COST;
+      const sensorSvc = spaces * SENSOR_SERVICE;
+      const laneAct = lanes * COUNTER_COST;
+      const laneSvc = lanes * COUNTER_SERVICE;
+      const sensorLease = spaces * SENSOR_LEASE_MONTHLY * 12;
+      const laneLease = lanes * COUNTER_LEASE;
+
+      // Apply bulk discount only to activation
+      const sensorActNet = sensorAct * (1 - spaceDisc);
+      const laneActNet = laneAct;
+
+      // Apply term discount only to year1 service
+      const sensorSvcNet = sensorSvc;
+      const sensorSvcYear1 = sensorSvcNet * (1 - commitDisc);
+      const laneSvcNet = laneSvc;
+
+      const year1Pu =
+        sensorActNet + sensorSvcYear1 + laneActNet + laneSvcNet + stationCost + installCost;
+      const year1Le = sensorLease + laneLease;
+
+      const annualPu = (sensorSvc + laneSvc) * (1 - commitDisc);
+      const annualLe = (spaces * SENSOR_LEASE_MONTHLY * 12 + lanes * COUNTER_LEASE) * (1 - commitDisc);
+
+      const tcoPu = year1Pu + (term - 1) * annualPu;
+      const tcoLe = year1Le + (term - 1) * annualLe;
 
       const y1 = document.getElementById('year1List');
       y1.innerHTML = '';
-      if (spaces) {
-        y1.insertAdjacentHTML('beforeend', `<li>Sensor Purchase <span>${formatCurrency(sensorPu)}</span></li>`);
-        y1.insertAdjacentHTML('beforeend', `<li>Sensor SaaS <span>${formatCurrency(sensorSs)}</span></li>`);
-        y1.insertAdjacentHTML('beforeend', `<li>Base Stations (${stationCount}) <span>${formatCurrency(stationCost)}</span></li>`);
+      if (mode === 'purchase') {
+        if (spaces) {
+          const li1 = document.createElement('li');
+          li1.innerHTML =
+            `Per-space Sensors <span class="result-number" data-value="${sensorActNet}">$0</span>`;
+          y1.appendChild(li1);
+          if (spaceDisc > 0) {
+            const bd = document.createElement('li');
+            bd.className = 'discount-note';
+            bd.innerHTML =
+              `${Math.round(spaceDisc * 100)}% bulk discount: -${formatUSD(
+                sensorAct * spaceDisc
+              )}`;
+            y1.appendChild(bd);
+          }
+
+          const li2 = document.createElement('li');
+          li2.innerHTML =
+            `Annual Service <span class="result-number" data-value="${sensorSvcYear1}">$0</span>`;
+          y1.appendChild(li2);
+          if (commitDisc > 0) {
+            const cd = document.createElement('li');
+            cd.className = 'discount-note';
+            cd.innerHTML =
+              `${Math.round(commitDisc * 100)}% term discount: -${formatUSD(
+                sensorSvc * commitDisc
+              )}`;
+            y1.appendChild(cd);
+          }
+        }
+        if (lanes) {
+          const li3 = document.createElement('li');
+          li3.innerHTML =
+            `Buy Counters <span class="result-number" data-value="${laneAct}">$0</span>`;
+          y1.appendChild(li3);
+
+          const li4 = document.createElement('li');
+          li4.innerHTML =
+            `Counter Service <span class="result-number" data-value="${laneSvc}">$0</span>`;
+          y1.appendChild(li4);
+        }
+        if (stationCount) {
+          const li5 = document.createElement('li');
+          li5.innerHTML =
+            `Base Stations (${stationCount}) <span class="result-number" data-value="${stationCost}">$0</span>`;
+          y1.appendChild(li5);
+        }
+        const li6 = document.createElement('li');
+        li6.innerHTML =
+          `Installation <span class="result-number" data-value="${installCost}">$0</span>`;
+        y1.appendChild(li6);
+      } else {
+        if (spaces) {
+          const liL1 = document.createElement('li');
+          liL1.innerHTML =
+            `Sensor Lease Fee <span class="result-number" data-value="${sensorLease}">$0</span>`;
+          y1.appendChild(liL1);
+        }
+        if (lanes) {
+          const liL2 = document.createElement('li');
+          liL2.innerHTML =
+            `Counter Lease Fee <span class="result-number" data-value="${laneLease}">$0</span>`;
+          y1.appendChild(liL2);
+        }
       }
-      if (lanes) {
-        y1.insertAdjacentHTML('beforeend', `<li>Lane Purchase <span>${formatCurrency(counterPu)}</span></li>`);
-        y1.insertAdjacentHTML('beforeend', `<li>Lane SaaS <span>${formatCurrency(counterSs)}</span></li>`);
-      }
-      y1.insertAdjacentHTML('beforeend', `<li>Installation <span>${formatCurrency(installCost)}</span></li>`);
+
+      const totalLi = document.createElement('li');
+      totalLi.style.cssText =
+        'font-weight:600;border-top:1px solid var(--border);padding-top:8px;';
+      const y1val = mode === 'purchase' ? year1Pu : year1Le;
+      totalLi.innerHTML =
+        `Year 1 Total <span class="result-number" data-value="${y1val}">$0</span>`;
+      y1.appendChild(totalLi);
+
+      const y2 = document.getElementById('year2List');
+      y2.innerHTML = '';
+      const liA = document.createElement('li');
+      const labelY2 = mode === 'lease' ? 'Annual Lease Fee' : 'Annual Service';
+      const valY2 = mode === 'purchase' ? annualPu : annualLe;
+      liA.innerHTML = `${labelY2} <span class="result-number" data-value="${valY2}">$0</span>`;
+      y2.appendChild(liA);
 
       const tcoList = document.getElementById('tcoList');
-      tcoList.innerHTML = `<li>3-Year Purchase TCO <span>${formatCurrency(tcoPu)}</span></li><li>3-Year Lease TCO <span>${formatCurrency(tcoLe)}</span></li>`;
+      tcoList.innerHTML = '';
+      const liT = document.createElement('li');
+      const valTermTotal = mode === 'purchase' ? tcoPu : tcoLe;
+      liT.innerHTML =
+        `<span>${term}-Year Total</span> <span class="result-number" data-value="${valTermTotal}">$0</span>`;
+      tcoList.appendChild(liT);
+
+      document.querySelectorAll('.result-number').forEach((el) =>
+        animateNumber(el, +el.getAttribute('data-value'))
+      );
     }
 
     computeBtn.addEventListener('click', calculate);
-    spacesEl.addEventListener('input', calculate);
-    lanesEl.addEventListener('input', calculate);
-    termEl.addEventListener('input', calculate);
+    [spacesEl, lanesEl, termEl].forEach((el) =>
+      el.addEventListener('input', calculate)
+    );
     modelEl.addEventListener('change', calculate);
-
     calculate();
   </script>
 </body>
